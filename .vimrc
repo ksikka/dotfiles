@@ -1,6 +1,27 @@
 " Use Vim settings, rather then Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
+filetype off
+" Vundle
+"
+set rtp+=~/.vim/bundle/vundle/
+call vundle#begin()
+
+
+" let Vundle manage Vundle
+" " required! 
+Bundle 'gmarik/vundle'
+
+" My bundles here:
+Bundle 'scrooloose/nerdtree'
+Bundle 'scrooloose/syntastic'
+Bundle 'tpope/vim-fireplace'
+Bundle 'guns/vim-clojure-static'
+Bundle 'tpope/vim-classpath'
+Bundle 'leafgarland/typescript-vim'
+Bundle 'kchmck/vim-coffee-script'
+call vundle#end()
+filetype plugin indent on
 
 " TODO: this may not be in the correct place. It is intended to allow overriding <Leader>.
 " source ~/.vimrc.before if it exists.
@@ -39,21 +60,14 @@ set noswapfile
 set nobackup
 set nowb
 
-" ================ Persistent Undo ==================
-" Keep undo history across sessions, by storing in file.
-" Only works all the time.
-
-set undodir=~/.vim/backups
-set undofile
-
 " ================ Indentation ======================
 
 set autoindent
 set smartindent
 set smarttab
-set shiftwidth=2
-set softtabstop=2
-set tabstop=2
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
 set expandtab
 
 filetype plugin on
@@ -97,3 +111,4 @@ set sidescroll=1
 for f in split(glob('~/.vim/plugin/settings/*.vim'), '\n')
   exe 'source' f
 endfor
+
