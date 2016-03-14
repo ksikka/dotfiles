@@ -4,22 +4,44 @@ set nocompatible
 filetype off
 " Vundle
 "
-set rtp+=~/.vim/bundle/vundle/
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
 
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
 
-" let Vundle manage Vundle
-" " required! 
-Bundle 'gmarik/vundle'
+Plugin 'scrooloose/nerdtree'
+" Open nerdtree on vim open, if no file args.
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" Open NERDTree with Ctrl+n
+map <C-n> :NERDTreeToggle<CR>
 
-" My bundles here:
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/syntastic'
-Bundle 'tpope/vim-fireplace'
-Bundle 'guns/vim-clojure-static'
-Bundle 'tpope/vim-classpath'
-Bundle 'leafgarland/typescript-vim'
-Bundle 'kchmck/vim-coffee-script'
+Plugin 'ctrlpvim/ctrlp.vim'
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|bower_components|target|dist)|(\.(swp|ico|git|svn))$'
+if executable('ag')
+  " Use Ag over Grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+"Plugin 'scrooloose/syntastic'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'Yggdroot/indentLine'
+Plugin 'Shougo/vimproc.vim'
+Plugin 'Quramy/tsuquyomi'
+
+Plugin 'kchmck/vim-coffee-script'
 call vundle#end()
 filetype plugin indent on
 
@@ -65,9 +87,9 @@ set nowb
 set autoindent
 set smartindent
 set smarttab
-set shiftwidth=4
-set softtabstop=4
-set tabstop=4
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
 set expandtab
 
 filetype plugin on
@@ -99,8 +121,7 @@ set wildignore+=*.gem
 set wildignore+=log/**
 set wildignore+=tmp/**
 set wildignore+=*.png,*.jpg,*.gif
-
-"
+set wildignore+=**/tmp/**,**.so,**.swp,*.zip,bower_components/,node_modules/
 
 " ================ Scrolling ========================
 
@@ -112,3 +133,8 @@ for f in split(glob('~/.vim/plugin/settings/*.vim'), '\n')
   exe 'source' f
 endfor
 
+" ================ Clipboard ========================
+set clipboard=unnamed
+
+" ================ Mouse ========================
+set mouse=a
